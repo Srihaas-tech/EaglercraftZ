@@ -133,13 +133,15 @@ body {
         <div class="background"></div>
         <div class="content">
             <h1>Choose a build</h1>
-            <h2>Warning!: Using builds 0.0.8 above no longer supports 0.0.7 or below as 0.0.8 above contains a full rewrite, consider backing-up your single player world as worlds may be corrupted or crash when loading into one</h2>
+            <h2><b>WARNING</b>: Using builds 0.0.8 above no longer supports 0.0.7 or below as 0.0.8 above contains a full rewrite, consider backing-up your single player world as worlds may be corrupted or crash when loading into one</h2>
+            <h2><b>NOTE</b>: I couldn't get the assets.epk files for versions "u1 RC" and lower. So until I get them all thats available for javascript are versions u0.1.0 and u0.2.0.</h2>
             <div class="menu">
                 <label for="gameSelect">Select Build:</label>
                 <select id="gameSelect">
                     <option value="builds/0.2.0/index.html">EaglercraftZ Latest</option>
                     <option value="builds/0.2.0/index.html">EaglercraftZ u2 Release</option>
-                    <option value="builds/0.1.0/index.html">EaglercraftZ u1 Release(Not Added)</option>
+                    <option value="builds/0.1.0/index.html">EaglercraftZ u1 Release</option>
+                    <!--
                     <option value="warning.html">EaglercraftZ u1 RC(Not Added)</option>
                     <option value="builds/0.0.9/index.html">EaglercraftZ 0.0.9 Dev Build(Not Added)</option>
                     <option value="builds/0.0.8/index.html">EaglercraftZ 0.0.8 Dev Build(Not Added)</option>
@@ -151,6 +153,7 @@ body {
                     <option value="builds/0.0.3/index.html">EaglercraftZ 0.0.3 Dev Build(Not Added)</option>
                     <option value="builds/0.0.2/index.html">EaglercraftZ 0.0.2 Dev Build(Not Added)</option>
                     <option value="builds/0.0.1/index.html">EaglercraftZ 0.0.1 Dev Build(Not Added)</option>
+                    -->
                 </select><br><br>
                 <button id="playButton" onclick="play()">Play</button>
 		<button id="playButton" onclick="history.back()">Back</button>
