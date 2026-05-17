@@ -31,7 +31,7 @@ const dropdown = document.getElementById('gameSelect');
 function play() {
     const selectedPath = dropdown.value;
     if (selectedPath) {
-        const newUrl = `${window.location.origin}${window.location.pathname}/${selectedPath}`;
+        const newUrl = new URL(selectedPath, `${window.location.origin}${window.location.pathname.replace(/\/?$/, '/')}`).toString();
         window.location.href = newUrl;
     }
 }
@@ -75,7 +75,7 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
-const audio = new Audio(`${Math.floor(Math.random() * 4 + 1)}.mp3`);
+const audio = new Audio(new URL(`${Math.floor(Math.random() * 4 + 1)}.mp3`, window.location.href).toString());
 
 document.addEventListener('click', (event) => {
     if (event.target === closeButton) {
@@ -190,6 +190,9 @@ window.addEventListener('change', event => {
 
 music()
 
-document.getElementById("back-button").addEventListener("click", function() {
-  window.open("/", "_blank");
-});
+const backButton = document.getElementById('back-button');
+if (backButton) {
+  backButton.addEventListener('click', function() {
+    window.open('./', '_blank');
+  });
+}
