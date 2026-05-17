@@ -31,8 +31,8 @@ const dropdown = document.getElementById('gameSelect');
 function play() {
     const selectedPath = dropdown.value;
     if (selectedPath) {
-        const newUrl = `${window.location.origin}${window.location.pathname}/${selectedPath}`;
-        window.location.href = newUrl;
+        // Simple relative navigation — avoids double-slash from pathname string concat
+        window.location.href = selectedPath;
     }
 }
 
@@ -68,6 +68,11 @@ function close() {
 }
 
 const closeButton = document.getElementById('close-button');
+if (closeButton) {
+  closeButton.addEventListener('click', function() {
+    close();
+  });
+}
 
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
@@ -75,7 +80,8 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
-const audio = new Audio(`${Math.floor(Math.random() * 4 + 1)}.mp3`);
+// Use the actual music file that exists in the repo
+const audio = new Audio(new URL('assets/music/moog_city_2.ogg', window.location.href).toString());
 
 document.addEventListener('click', (event) => {
     if (event.target === closeButton) {
@@ -190,6 +196,9 @@ window.addEventListener('change', event => {
 
 music()
 
-document.getElementById("back-button").addEventListener("click", function() {
-  window.open("/", "_blank");
-});
+const backButton = document.getElementById('back-button');
+if (backButton) {
+  backButton.addEventListener('click', function() {
+    window.open('./', '_blank');
+  });
+}
