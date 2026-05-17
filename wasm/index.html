@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EaglercraftZ Launcher</title>
+    <link type="image/png" rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="style.css">
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+		<meta name="description" content="EaglercraftZ 1.20.4">
+		<meta name="keywords" content="eaglercraft, eaglercraftz, minecraft, 1.20, 1.20.4">
+		<title>EaglercraftZ</title>
+		<meta property="og:locale" content="en-US">
+		<meta property="og:type" content="website">
+		<meta property="og:title" content="EaglercraftZ">
+		<meta property="og:image" content="assets/background/panorama.mp4">
+		<meta property="og:description" content="Eaglercraft with 1.20 Features">
+
+        <style>
+    @import url(https://rsms.me/inter/inter.css);
+@import url(https://site-assets.fontawesome.com/releases/v6.6.0/css/all.css);
+:root {
+    --effect-color: rgb(209, 148, 198);
+    --solid-image-outline: drop-shadow(-1px -1px 0 var(--effect-color)) drop-shadow(1px -1px 0 var(--effect-color)) drop-shadow(-1px 1px 0 var(--effect-color)) drop-shadow(1px 1px 0 var(--effect-color));
+}
+html, body {
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+    width: 100vw;
+    font-family: Inter;
+    color: white;
+    height: 100vh;
+}
+body {
+    background: url("/assets/background/panorama.mp4");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50%;
+}
+
+.page-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 4px;
+}
+.title {
+    width: 47.857vw;
+}
+.title img {
+    position: center;
+    width: 100%;
+    background-color: transparent;
+    margin-top: -50px;
+}
+.game-button {
+    cursor: pointer;
+    transition: scale 0.15s;
+    width: 260px;
+}
+.panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    flex-direction: column;
+}
+.game-button:hover {
+    scale: 1.1;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    background: rgba(0,0,0,0.4);
+    border-top: 2px solid rgba(255,255,255,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 14px;
+}
+.footer .fa-regular {
+    font-size: 18px;
+}
+.line-v {
+    height: 50%;
+    background: rgba(255,255,255,0.5);
+    width: 2px;
+}
+.footer .fa-stack {
+    font-size: 16px;
+    width: 19px;
+    height: 19px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.footer .fa-stack .fa-square {
+    font-size: 22px;
+}
+.footer .fa-stack .fa-discord {
+    font-size: 10px;
+}
+#discord-button {
+    cursor: pointer;
+}
+#discord-button:hover {
+    background: rgba(16, 151, 255, 0.832);
+}
+#warning {
+    position: absolute;
+    bottom: 45px;
+    font-size: 8px;
+    width: 100%;
+    text-align: center;
+}
+</style>
+</head>
+<body>
+    <div class="launcher-container">
+        <div class="title">
+            <img src="/images/EaglercraftZ.png" alt="EaglerZ Title">
+        <div class="background"></div>
+        <div class="content">
+            <h1>Choose a build</h1>
+            <div class="menu">
+                <label for="gameSelect">Select Build:</label>
+                <select id="gameSelect">
+                    <option value="builds/0.1.0/index.html">EaglercraftZ Latest</option>
+                    <option value="builds/0.1.0/index.html">EaglercraftZ u1</option>
+                    <option value="builds/0.0.7/index.html">EaglercraftZ 0.0.7(Not Added)</option>
+                    <option value="builds/0.0.5/index.html">EaglercraftZ 0.0.5(Not Added)</option>
+                </select><br><br>
+                <button id="playButton" onclick="play()">Play</button>
+		<button id="playButton" onclick="history.back()">Back</button>
+                <embed name="music" src="/assets/music/moog_city_2.ogg" loop="true" hidden="true" autostart="true">
+            </div>
+        </h2>
+            </div>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+</div>
+<span id="warning">
+    <i class="fa-regular fa-ban"></i> Not affiliated with Mojang and Microsoft
+</span>
+<div class="footer">
+    <i class="fa-regular fa-shield-check"></i> ⓒEaglercraftZ Official
+    <div class="line-v"></div>
+    <span class="fa-stack" id="discord-button">
+        <i class="fa-brands fa-discord fa-stack-1x"></i>
+        <i class="fa-regular fa-square fa-stack-1x bigger-icon"></i>
+    </span>
+</div>
+<script type="text/javascript">
+    function formatImageSource(url, hovered) {
+    return url.replace('%h%', (hovered ? 'hovered' : ''));
+}
+document.querySelectorAll('.game-button').forEach(btn => {
+    btn.src = formatImageSource(btn.dataset.image, false);
+    btn.addEventListener('click', () => {
+        window.location.href = btn.dataset.href;
+    });
+    btn.addEventListener('mouseenter', () => {
+        btn.src = formatImageSource(btn.dataset.image, true);
+    });
+    btn.addEventListener('mouseleave', () => {
+        btn.src = formatImageSource(btn.dataset.image, false);
+    });
+})
+document.querySelector('#discord-button').addEventListener('click', ()=>{
+    window.open("https://dsc.gg/eaglercraftz");
+})
+</script>
+</body>
+</html>

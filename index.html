@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EaglercraftZ Launcher</title>
+    <link type="image/png" rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="style-test.css">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+		<meta name="description" content="EaglercraftZ 1.20.4">
+		<meta name="keywords" content="eaglercraft, eaglercraftz, minecraft, 1.20, 1.20.4">
+		<title>EaglercraftZ</title>
+		<meta property="og:locale" content="en-US">
+		<meta property="og:type" content="website">
+		<meta property="og:title" content="EaglercraftZ">
+		<meta property="og:image" content="icon.png">
+		<meta property="og:description" content="Eaglercraft with 1.20 Features">
+
+<style>
+    @import url(https://rsms.me/inter/inter.css);
+@import url(https://site-assets.fontawesome.com/releases/v6.6.0/css/all.css);
+:root {
+    --effect-color: rgb(209, 148, 198);
+    --solid-image-outline: drop-shadow(-1px -1px 0 var(--effect-color)) drop-shadow(1px -1px 0 var(--effect-color)) drop-shadow(-1px 1px 0 var(--effect-color)) drop-shadow(1px 1px 0 var(--effect-color));
+}
+html, body {
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+    width: 100vw;
+    font-family: Inter;
+    color: white;
+    height: 100vh;
+}
+body {
+    background: url("assets/background/panorama.mp4");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50%;
+}
+
+.page-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 4px;
+}
+.title {
+    width: 47.857vw;
+}
+.title img {
+    position: center;
+    width: 100%;
+    background-color: transparent;
+    margin-top: -50px;
+}
+.game-button {
+    cursor: pointer;
+    transition: scale 0.15s;
+    width: 260px;
+}
+.panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    flex-direction: column;
+}
+.game-button:hover {
+    scale: 1.1;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    background: rgba(0,0,0,0.4);
+    border-top: 2px solid rgba(255,255,255,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 14px;
+}
+.footer .fa-regular {
+    font-size: 18px;
+}
+.line-v {
+    height: 50%;
+    background: rgba(255,255,255,0.5);
+    width: 2px;
+}
+.footer .fa-stack {
+    font-size: 16px;
+    width: 19px;
+    height: 19px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.footer .fa-stack .fa-square {
+    font-size: 22px;
+}
+.footer .fa-stack .fa-discord {
+    font-size: 10px;
+}
+#discord-button {
+    cursor: pointer;
+}
+#discord-button:hover {
+    background: rgba(16, 151, 255, 0.832);
+}
+#warning {
+    position: absolute;
+    bottom: 45px;
+    font-size: 8px;
+    width: 100%;
+    text-align: center;
+}
+.dev-portal-button {
+    position: fixed;
+    left: 10px;
+    top: 10px;
+    z-index: 1000;
+    padding: 8px 15px;
+    background: rgba(209, 148, 198, 0.8);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: Inter;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.dev-portal-button:hover {
+    background: rgba(209, 148, 198, 1);
+    transform: scale(1.05);
+}
+</style>
+</head>
+<body>
+
+    <!-- THE POP-UP MODAL -->
+    <div id="popup-modal" class="modal">
+        <div class="modal-content glass-card">
+            <span class="close" onclick="closePopup()">&times;</span>
+            <b><h1>Notice</h1></b>
+            <h2>This isnt made by me. All credits go to the devs of EaglercraftZ.<br>Im just sharing it for other users to access easier!</h2>
+
+            <h2>Panic Key: Press the key Z on your keyboard to be redirected to blocked page in an emergency! ;> </h2>
+
+            <h3>Should fr go check out the original devs! <a href="https://dsc.gg/eaglercraftz">EaglercraftZ Discord</a></h3>
+        </div>
+    </div>
+
+    </div>
+    <div class="launcher-container">
+	    				<div class="title">
+					<img src="/images/EaglercraftZ.png" alt="EaglerZ Title">
+        <div class="background"></div>
+        <div class="content">
+            <div class="actual-content">
+                <h1>Choose a runtime</h1>
+	        <h2>Using Wasm may not work on some devices</h2>
+                <div class="menu">
+                <label for="gameSelect">Select Version:</label>
+                <select id="gameSelect">
+                    <option value="javascript/index.html">EaglercraftZ Javascript</option>
+                    <option value="wasm/index.html">EaglercraftZ Wasm</option>
+                </select><br><br>
+                <button id="playButton" onclick="play()">Play</button>
+                <button id="playButton" onclick="settings()">Settings</button>
+                <embed name="music" src="assets/music/moog_city_2.ogg" loop="true" hidden="true" autostart="true">
+                </div>
+            </div>
+        </h2>
+            </div>
+        </div>
+    </div>
+
+    <div id="settings-cont">
+
+        <h1>Settings</h1>
+        <h2>Still under construction</h2>
+
+        <div class="container">
+            <h3>Something</h3>
+            <div class="ios-liquid-toggle-container"></div>
+                <input type="checkbox" id="liquidToggle" class="ios-liquid-toggle-input">
+                <label for="liquidToggle" class="ios-liquid-toggle-label">
+                <span class="liquid-track"></span>
+                <span class="liquid-thumb"></span>
+                </label>
+        </div>
+
+        
+        <div style="bottom: 15px; position: absolute; left: 50%; transform: translate(-50%, 0);">
+            <p><i>Press Escape To Close This Menu</i></p>
+        </div>
+
+    <div id="overlay"></div>
+    <script src="js2/script.js"></script>
+		</div>
+<span id="warning">
+    <i class="fa-regular fa-ban"></i> Not affiliated with Mojang and Microsoft
+</span>
+<div class="footer">
+    <i class="fa-regular fa-shield-check"></i> ⓒEaglercraftZ Official
+    <div class="line-v"></div>
+    <span class="fa-stack" id="discord-button">
+        <i class="fa-brands fa-discord fa-stack-1x"></i>
+        <i class="fa-regular fa-square fa-stack-1x bigger-icon"></i>
+    </span>
+</div>
+<p id="launchbg"></p>
+
+    <img src="assets/loading/eagtek.png" alt="" id="logo1">
+    <img src="assets/loading/moyang.png" alt="" id="logo2">
+    <img src="images/EaglercraftZ.png" alt="" id="logo3">
+<script type="text/javascript">
+    function formatImageSource(url, hovered) {
+    return url.replace('%h%', (hovered ? 'hovered' : ''));
+}
+document.querySelectorAll('.game-button').forEach(btn => {
+    btn.src = formatImageSource(btn.dataset.image, false);
+    btn.addEventListener('click', () => {
+        window.location.href = btn.dataset.href;
+    });
+    btn.addEventListener('mouseenter', () => {
+        btn.src = formatImageSource(btn.dataset.image, true);
+    });
+    btn.addEventListener('mouseleave', () => {
+        btn.src = formatImageSource(btn.dataset.image, false);
+    });
+})
+document.querySelector('#discord-button').addEventListener('click', ()=>{
+    window.open("https://dsc.gg/eaglercraftz");
+})
+
+document.addEventListener('keydown', function(event) {
+            if (event.key === 'z') {
+                window.location.replace('assets/fakeBlock/blocked.html');
+            }
+        });
+</script>
+
+            <svg style="display: none;">
+                <filter id="liquid-distortion" x="-20%" y="-20%" width="140%" height="140%">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.01 0.01" numOctaves="3" seed="0" result="noise">
+                        <animate attributeName="baseFrequency" from="0.01 0.01" to="0.03 0.03" dur="8s" repeatCount="indefinite" />
+                    </feTurbulence>
+                    <feDisplacementMap in="SourceGraphic" in2="noise" scale="20" xChannelSelector="R" yChannelSelector="G"/>
+                    <feSpecularLighting in="noise" specularExponent="20" lighting-color="#fff" result="specular">
+                        <fePointLight x="-5000" y="-10000" z="20000" />
+                    </feSpecularLighting>
+                    <feComposite in="specular" in2="SourceGraphic" operator="in" result="lighting" />
+                    <feComposite in="SourceGraphic" in2="lighting" operator="over" />
+                </filter>
+            </svg>
+</body>
+</html>
