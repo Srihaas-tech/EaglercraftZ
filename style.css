@@ -1,3 +1,4 @@
+/* Minecraft UI Theme CSS */
 body {
     margin: 0;
     padding: 0;
@@ -21,8 +22,12 @@ body {
     transition: filter 0.5s;
 }
 
+/* Screen Management */
 .screen {
-    display: none;
+    display: flex;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -31,10 +36,13 @@ body {
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 10;
 }
 
 .screen.active {
-    display: flex;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 20;
 }
 
 .game-logo {
@@ -55,6 +63,7 @@ body {
     margin-bottom: 10px;
 }
 
+/* Button Container */
 .mc-button-container {
     display: flex;
     flex-direction: column;
@@ -71,6 +80,7 @@ body {
     flex: 1;
 }
 
+/* Minecraft Button */
 .mc-button {
     background-color: #c6c6c6;
     border: 3px solid;
@@ -99,6 +109,7 @@ body {
     padding-bottom: 8px;
 }
 
+/* Panels (modals/settings backgrounds) */
 .mc-panel {
     background-color: #c6c6c6;
     border: 4px solid;
@@ -142,6 +153,7 @@ body {
     font-size: 22px;
 }
 
+/* Simple Toggle */
 .mc-toggle {
     display: flex;
     align-items: center;
@@ -180,6 +192,7 @@ body {
     color: #222;
 }
 
+/* Modal specific */
 .mc-modal-overlay {
     position: fixed;
     top: 0;
