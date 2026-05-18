@@ -158,7 +158,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 3000);
 
     setTimeout(() => {
-        if(logo2) logo2.style.opacity = '1';
+        if(logo2) {
+            logo2.style.opacity = '1';
+            const targetSize = window.innerWidth < 1000 ? window.innerWidth + 'px' : '1000px';
+            logo2.style.width = targetSize;
+        }
     }, 3500);
 
     setTimeout(() => {
