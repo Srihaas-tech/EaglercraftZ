@@ -15,21 +15,26 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- INTRO SEQUENCE -->
+     
     <div id="intro-screen" style="position:fixed; z-index:9999; top:0; left:0; width:100vw; height:100vh; background-color:white; display:flex; justify-content:center; align-items:center; transition: opacity 0.5s ease;">
-        <img src="assets/loading/eagtek.png" alt="" id="logo1" style="position:absolute; width:1000px; opacity:0; top:50%; left:50%; transform:translate(-50%, -50%); transition: width 5s linear, opacity 0.3s ease;">
+        
+        <!-- INTRO SEQUENCE
+        <img src="assets/loading/eagtek.png" alt="" id="logo1" style="position:absolute; width:1000px; opacity:0; top:50%; left:50%; transform:translate(-50%, -50%); transition: width 5s linear, opacity 0.3s ease;"> -->
+    
         <img src="assets/loading/moyang.png" alt="" id="logo2" style="position:absolute; width:4000px; opacity:0; top:50%; left:50%; transform:translate(-50%, -50%); transition: width 5s linear, opacity 0.3s ease;">
-        <img src="images/EaglercraftZ.png" alt="" id="logo3" style="position:absolute; width:1000px; opacity:0; top:50%; left:50%; transform:translate(-50%, -50%); transition: transform 2s ease, opacity 0.3s ease;">
+
+           <!-- Only gonna use "Moyang" bcs I like Mojang. 
+        <img src="images/EaglercraftZ.png" alt="" id="logo3" style="position:absolute; width:1000px; opacity:0; top:50%; left:50%; transform:translate(-50%, -50%); transition: transform 2s ease, opacity 0.3s ease;"> -->
     </div>
 
     <video autoplay loop muted playsinline id="background-container" class="bg-video" poster="assets/background/panorama-shaders.png">
         <source src="assets/background/panorama.mp4" type="video/mp4">
-    </video>
+    </video> 
     
     <!-- AUDIO -->
     <audio id="bg-music" src="assets/music/moog_city_2.ogg" hidden></audio>
 
-    <!-- NOTICES MODAL (Popup) -->
+    <!-- NOTICES MODAL (Popup) COmmented out bcs its lowk kinda redundant
     <div id="notice-modal" class="mc-modal-overlay">
         <div class="mc-modal">
             <h2 class="mc-title-small" style="color: #444;">Notice</h2>
@@ -43,7 +48,7 @@
                 <button class="mc-button" onclick="closeNotice()">Continue</button>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- MAIN MENU -->
     <div id="main-menu" class="screen active">
