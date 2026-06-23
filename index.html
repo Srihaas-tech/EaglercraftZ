@@ -17,41 +17,32 @@
 <body>
 
 <style>
-/* Animation for the full intro overlay */
-@keyframes introFade {
-    0%, 70% { opacity: 1; visibility: visible; }       /* Static for 7 seconds total (4s logo + 3s white) */
-    80% { opacity: 0; visibility: visible; }       /* Fades out smoothly over 1 second (from 7s to 8s mark) */
-    100% { opacity: 0; visibility: hidden; }       /* Stays completely hidden permanently */
-}
-
-/* Animation for the Mojang logo specifically */
-@keyframes logoVanish {
-    0%, 40% { opacity: 1; visibility: visible; }       /* Static full-screen logo for exactly 4 seconds */
-    40.1%, 100% { opacity: 0; visibility: hidden; }   /* Instantly drops to 0 opacity, exposing white background */
-}
-
 #intro-screen {
     position: fixed;
     z-index: 9999;
-    top: 0;
-    left: 0;
+    inset: 0;
     width: 100vw;
     height: 100vh;
-    background-color: white;
-    /* Runs the introFade animation over a total sequence timeline of 10 seconds */
-    animation: introFade 10s linear forwards;
+    background: white;
+    overflow: hidden;
+    animation: hideIntro 0s linear 3s forwards;
 }
 
 #logo2 {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    z-index: 10000;
-    /* Runs the logoVanish animation over the same 10 second timeline */
-    animation: logoVanish 10s linear forwards;
+    display: block;
+}
+
+@keyframes hideIntro {
+    to {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
 }
 </style>
 

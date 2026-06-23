@@ -143,47 +143,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const introScreen = document.getElementById('intro-screen');
-    if (!introScreen) return; // if not present, skip
-
-    const logo1 = document.getElementById('logo1');
-    const logo2 = document.getElementById('logo2');
-    const logo3 = document.getElementById('logo3');
-
-    setTimeout(() => {
-        if(logo1) logo1.style.opacity = '1';
-    }, 500);
-
-    setTimeout(() => {
-        if(logo1) logo1.style.opacity = '0';
-    }, 3000);
-
-    setTimeout(() => {
-        if(logo2) {
-            logo2.style.opacity = '1';
-            const targetSize = window.innerWidth < 1000 ? window.innerWidth + 'px' : '1000px';
-            logo2.style.width = targetSize;
-        }
-    }, 3500);
-
-    setTimeout(() => {
-        if(logo2) logo2.style.opacity = '0';
-    }, 6000);
-
-    setTimeout(() => {
-        if(logo3) {
-            logo3.style.opacity = '1';
-            logo3.style.transform = 'translate(-50%, -50%) scale(1.1)';
-        }
-    }, 6500);
-
-    setTimeout(() => {
-        if(logo3) logo3.style.opacity = '0';
-    }, 9000);
-
-    setTimeout(() => {
-        introScreen.style.opacity = '0';
+    if (introScreen) {
         setTimeout(() => {
+            introScreen.style.opacity = '0';
+            introScreen.style.visibility = 'hidden';
+            introScreen.style.pointerEvents = 'none';
             introScreen.style.display = 'none';
-        }, 500);
-    }, 9500);
+        }, 3000);
+    }
 });
