@@ -1,15 +1,17 @@
 {
-  "version": 2,
-  "cleanUrls": true,
-  "headers": [
+  "framework": null,
+  "rewrites": [
     {
-      "source": "/(.*).(wasm|js|css|png|svg|ico)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
+      "source": "/wasm/builds/:path*",
+      "destination": "/wasm/builds/:path*"
+    },
+    {
+      "source": "/js/:path*",
+      "destination": "/js/:path*"
+    },
+    {
+      "source": "/:path*",
+      "destination": "/index.html"
     }
   ]
 }
