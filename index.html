@@ -16,57 +16,69 @@
 </head>
 <body>
      
-    <div id="intro-screen" style="position:fixed; z-index:9999; top:0; left:0; width:100vw; height:100vh; background-color:white; display:flex; justify-content:center; align-items:center; transition: opacity 0.5s ease;">
-        
-        <!-- INTRO SEQUENCE
-        <img src="assets/loading/eagtek.png" alt="" id="logo1" style="position:absolute; width:1000px; opacity:0; top:50%; left:50%; transform:translate(-50%, -50%); transition: width 5s linear, opacity 0.3s ease;"> -->
-    
-       <img src="assets/loading/moyang.png" alt="Logo" id="logo2" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; object-fit: cover; z-index: 9999;">
+  <style>
+/* Animation for the full intro overlay */
+@keyframes introFade {
+    0%, 70% { opacity: 1; visibility: visible; }       /* Static for 7 seconds total (4s logo + 3s white) */
+    80% { opacity: 0; visibility: visible; }       /* Fades out smoothly over 1 second (from 7s to 8s mark) */
+    100% { opacity: 0; visibility: hidden; }       /* Stays completely hidden permanently */
+}
 
+/* Animation for the Mojang logo specifically */
+@keyframes logoVanish {
+    0%, 40% { opacity: 1; visibility: visible; }       /* Static full-screen logo for exactly 4 seconds */
+    40.1%, 100% { opacity: 0; visibility: hidden; }   /* Instantly drops to 0 opacity, exposing white background */
+}
 
+#intro-screen {
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    /* Runs the introFade animation over a total sequence timeline of 10 seconds */
+    animation: introFade 10s linear forwards;
+}
 
-           <!-- Only gonna use "Moyang" bcs I like Mojang. 
-        <img src="images/EaglercraftZ.png" alt="" id="logo3" style="position:absolute; width:1000px; opacity:0; top:50%; left:50%; transform:translate(-50%, -50%); transition: transform 2s ease, opacity 0.3s ease;"> -->
-    </div>
+#logo2 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: 10000;
+    /* Runs the logoVanish animation over the same 10 second timeline */
+    animation: logoVanish 10s linear forwards;
+}
+</style>
 
-    <video autoplay loop muted playsinline id="background-container" class="bg-video" poster="assets/background/panorama-shaders.png">
-        <source src="assets/background/panorama.mp4" type="video/mp4">
-    </video> 
-    
-    <!-- AUDIO -->
-    <audio id="bg-music" src="assets/music/moog_city_2.ogg" hidden></audio>
+<div id="intro-screen"> 
+    <img src="assets/loading/moyang.png" alt="Logo" id="logo2"> 
+</div> 
 
-    <!-- NOTICES MODAL (Popup) COmmented out bcs its lowk kinda redundant
-    <div id="notice-modal" class="mc-modal-overlay">
-        <div class="mc-modal">
-            <h2 class="mc-title-small" style="color: #444;">Notice</h2>
-            <p>This isnt made by me. All credits go to the devs of EaglercraftZ.<br>
-               Im just sharing it for other users to access easier!</p>
-            <p class="mc-warning">Panic Key: Press the key Z on your keyboard to be redirected to blocked page in an emergency! ;></p>
-            <p>Should fr go check out the original devs! <br>
-                <a href="https://dsc.gg/eaglercraftz" target="_blank" class="mc-link">EaglercraftZ Discord</a>
-            </p>
-            <div class="mc-modal-footer">
-                <button class="mc-button" onclick="closeNotice()">Continue</button>
-            </div>
-        </div>
-    </div> -->
+<video autoplay loop muted playsinline id="background-container" class="bg-video" poster="assets/background/panorama-shaders.png"> 
+    <source src="assets/background/panorama.mp4" type="video/mp4"> 
+</video> 
 
-    <!-- MAIN MENU -->
-    <div id="main-menu" class="screen active">
-        <img src="images/EaglercraftZ.png" alt="EaglercraftZ Launcher" class="game-logo" onerror="this.style.display='none'; document.getElementById('text-logo').style.display='block';">
-        <h1 id="text-logo" class="mc-title" style="display:none; margin-bottom: 40px; text-shadow: 4px 4px 0 #000;">EaglercraftZ Launcher</h1>
+<!-- AUDIO --> 
+<audio id="bg-music" src="assets/music/moog_city_2.ogg" hidden></audio> 
 
-        <div class="mc-button-container">
-            <button class="mc-button" onclick="showScreen('play-screen')">Play Eaglercraft</button>
-            <button class="mc-button" onclick="showScreen('settings-screen')">Settings</button>
-            <button class="mc-button" onclick="window.open('https://dsc.gg/eaglercraftz', '_blank')">Discord</button>
-        </div>
-        
-        <div class="footer-text">
-            <span>&copy; EaglercraftZ Official | Not affiliated with Mojang or Microsoft</span>
-        </div>
-    </div>
+<!-- MAIN MENU --> 
+<div id="main-menu" class="screen active"> 
+    <img src="images/EaglercraftZ.png" alt="EaglercraftZ Launcher" class="game-logo" onerror="this.style.display='none'; document.getElementById('text-logo').style.display='block';"> 
+    <h1 id="text-logo" class="mc-title" style="display:none; margin-bottom: 40px; text-shadow: 4px 4px 0 #000;">EaglercraftZ Launcher</h1> 
+    <div class="mc-button-container"> 
+        <button class="mc-button" onclick="showScreen('play-screen')">Play Eaglercraft</button> 
+        <button class="mc-button" onclick="showScreen('settings-screen')">Settings</button> 
+        <button class="mc-button" onclick="window.open('https://dsc.gg', '_blank')">Discord</button> 
+    </div> 
+    <div class="footer-text"> 
+        <span>&copy; EaglercraftZ Official | Not affiliated with Mojang or Microsoft</span> 
+    </div> 
+</div>
 
     <!-- PLAY SCREEN -->
     <div id="play-screen" class="screen">
