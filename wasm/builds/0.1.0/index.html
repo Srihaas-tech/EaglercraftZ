@@ -45,12 +45,8 @@
 						demoMode: false,
 						localesURI: "lang/",
 						worldsDB: "worlds",
-						servers: serverConfig ? serverConfig.getServers({ includeLocal: true }) : [
-							{ addr: "ws://localhost:8081/", name: "Local test server" },
-							{ addr: "wss://mc.arch.lol/", name: "ArchMC" },
-							{ addr: "wss://web.thanatos-network.xyz/", name: "Thanatos Network" },
-							{ addr: "wss://clever-teaching.com/", name: "Clever Teaching" },
-							{ addr: "wss://hamburber-smp.eagler.host/", name: "HAMBURBER-SMP" }
+						servers: serverConfig ? serverConfig.getServers({ includeLocal: true, client: "1.20.4" }) : [
+							{ addr: "ws://localhost:8081/", name: "Local test server" }
 						],
 						relays: serverConfig ? serverConfig.getRelays() : [
 							{ addr: "wss://relay.deev.is/", comment: "lax1dude relay #1", primary: relayId === 0 },
@@ -110,7 +106,7 @@
 					var q = window.location.search;
 					if(serverConfig) {
 						var s = serverConfig.getJoinServerFromLocation(window.location);
-						if(s) eaglercraftXOpts.joinServer = s;
+						if(s && serverConfig.isServerAddressCompatible(s, "1.20.4")) eaglercraftXOpts.joinServer = s;
 					}else if((typeof q === "string") && q[0] === "?" && (typeof URLSearchParams !== "undefined")) {
 						q = new URLSearchParams(q);
 						var s = q.get("server");

@@ -1,14 +1,23 @@
 (function () {
     "use strict";
 
+    const OFFICIAL_18_BUILD = "javascript/builds/official-1.8.8/index.html";
+    const LOCAL_120_BUILD = "javascript/builds/0.2.0/index.html";
+
     const PUBLIC_SERVERS = [
-        { id: "archmc", name: "ArchMC", addr: "wss://mc.arch.lol/" },
-        { id: "thanatos", name: "Thanatos Network", addr: "wss://web.thanatos-network.xyz/" },
-        { id: "clever", name: "Clever Teaching", addr: "wss://clever-teaching.com/" },
-        { id: "hamburber", name: "HAMBURBER-SMP", addr: "wss://hamburber-smp.eagler.host/" }
+        { id: "archmc", name: "ArchMC", addr: "wss://mc.arch.lol/", clients: ["1.8.8"], preferredBuild: OFFICIAL_18_BUILD },
+        { id: "thanatos", name: "Thanatos Network", addr: "wss://web.thanatos-network.xyz/", clients: ["1.8.8"], preferredBuild: OFFICIAL_18_BUILD },
+        { id: "clever", name: "Clever Teaching", addr: "wss://clever-teaching.com/", clients: ["1.8.8"], preferredBuild: OFFICIAL_18_BUILD },
+        { id: "hamburber", name: "HAMBURBER-SMP", addr: "wss://hamburber-smp.eagler.host/", clients: ["1.8.8"], preferredBuild: OFFICIAL_18_BUILD }
     ];
 
-    const LOCAL_SERVER = { id: "local", name: "Local test server", addr: "ws://localhost:8081/" };
+    const LOCAL_SERVER = {
+        id: "local",
+        name: "Local test server",
+        addr: "ws://localhost:8081/",
+        clients: ["1.8.8", "1.20.4"],
+        preferredBuild: LOCAL_120_BUILD
+    };
 
     const RELAYS = [
         { addr: "wss://relay.deev.is/", comment: "lax1dude relay #1" },
@@ -20,14 +29,30 @@
         return {
             id: server.id,
             name: server.name,
-            addr: server.addr
+            addr: server.addr,
+            clients: server.clients.slice(),
+            preferredBuild: server.preferredBuild
         };
     }
 
     function getServers(options) {
         const includeLocal = options && options.includeLocal;
-        const servers = includeLocal ? [LOCAL_SERVER].concat(PUBLIC_SERVERS) : PUBLIC_SERVERS;
+        const client = options && options.client;
+        let servers = includeLocal ? [LOCAL_SERVER].concat(PUBLIC_SERVERS) : PUBLIC_SERVERS.slice();
+        if (client) {
+            servers = servers.filter(function (server) {
+                return server.clients.indexOf(client) !== -1;
+            });
+        }
         return servers.map(copyServer);
+    }
+
+    function getServerById(serverId) {
+        const servers = [LOCAL_SERVER].concat(PUBLIC_SERVERS);
+        const server = servers.find(function (candidate) {
+            return candidate.id === serverId;
+        });
+        return server ? copyServer(server) : null;
     }
 
     function getRelays() {
@@ -71,10 +96,30 @@
         return normalizeServerAddress(params.get("server"));
     }
 
+    function getComparableAddress(address) {
+        return normalizeServerAddress(address).replace(/\/+$/, "").toLowerCase();
+    }
+
+    function isServerAddressCompatible(address, client) {
+        const comparableAddress = getComparableAddress(address);
+        if (!comparableAddress) return false;
+
+        const servers = [LOCAL_SERVER].concat(PUBLIC_SERVERS);
+        const knownServer = servers.find(function (server) {
+            return getComparableAddress(server.addr) === comparableAddress;
+        });
+
+        return !knownServer || knownServer.clients.indexOf(client) !== -1;
+    }
+
     window.EaglercraftZServerConfig = {
         getServers: getServers,
+        getServerById: getServerById,
         getRelays: getRelays,
         normalizeServerAddress: normalizeServerAddress,
-        getJoinServerFromLocation: getJoinServerFromLocation
+        getJoinServerFromLocation: getJoinServerFromLocation,
+        isServerAddressCompatible: isServerAddressCompatible,
+        OFFICIAL_18_BUILD: OFFICIAL_18_BUILD,
+        LOCAL_120_BUILD: LOCAL_120_BUILD
     };
 }());
