@@ -8,10 +8,10 @@ function getServerConfig() {
 function getFallbackServers() {
     return [
         { id: 'local', name: 'Local test server', addr: 'ws://localhost:8081/', clients: ['1.8.8', '1.20.4'], preferredBuild: 'javascript/builds/0.2.0/index.html' },
-        { id: 'archmc', name: 'ArchMC', addr: 'wss://mc.arch.lol/', clients: ['1.8.8'], preferredBuild: 'javascript/builds/official-1.8.8/index.html' },
-        { id: 'thanatos', name: 'Thanatos Network', addr: 'wss://web.thanatos-network.xyz/', clients: ['1.8.8'], preferredBuild: 'javascript/builds/official-1.8.8/index.html' },
-        { id: 'clever', name: 'Clever Teaching', addr: 'wss://clever-teaching.com/', clients: ['1.8.8'], preferredBuild: 'javascript/builds/official-1.8.8/index.html' },
-        { id: 'hamburber', name: 'HAMBURBER-SMP', addr: 'wss://hamburber-smp.eagler.host/', clients: ['1.8.8'], preferredBuild: 'javascript/builds/official-1.8.8/index.html' }
+        { id: 'archmc', name: 'ArchMC', addr: 'wss://mc.arch.lol/', clients: ['1.8.8', '1.20.4'], preferredBuild: 'javascript/builds/0.2.0/index.html' },
+        { id: 'thanatos', name: 'Thanatos Network', addr: 'wss://web.thanatos-network.xyz/', clients: ['1.8.8', '1.20.4'], preferredBuild: 'javascript/builds/0.2.0/index.html' },
+        { id: 'clever', name: 'Clever Teaching', addr: 'wss://clever-teaching.com/', clients: ['1.8.8', '1.20.4'], preferredBuild: 'javascript/builds/0.2.0/index.html' },
+        { id: 'hamburber', name: 'HAMBURBER-SMP', addr: 'wss://hamburber-smp.eagler.host/', clients: ['1.8.8', '1.20.4'], preferredBuild: 'javascript/builds/0.2.0/index.html' }
     ];
 }
 
@@ -110,26 +110,6 @@ function appendSelectedServer(url) {
     return `${url}${separator}server=${encodeURIComponent(server)}`;
 }
 
-function getSelectedServerPreset() {
-    const serverSelect = document.getElementById('serverSelect');
-    if (!serverSelect || !serverSelect.value || serverSelect.value === 'custom') return null;
-    return findServerPreset(serverSelect.value);
-}
-
-function isBuildCompatibleWithServer(buildUrl, server) {
-    if (!server || !server.clients || server.clients.indexOf('1.20.4') !== -1) return true;
-    return buildUrl.includes('/official-1.8.8/');
-}
-
-function getCompatibleBuildUrl(requestedBuildUrl) {
-    const server = getSelectedServerPreset();
-    if (!server || isBuildCompatibleWithServer(requestedBuildUrl, server)) {
-        return requestedBuildUrl;
-    }
-
-    return server.preferredBuild || 'javascript/builds/official-1.8.8/index.html';
-}
-
 function showScreen(screenId) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     const screen = document.getElementById(screenId);
@@ -138,16 +118,6 @@ function showScreen(screenId) {
 
 function launchGame() {
     const versionSelect = document.getElementById('versionSelect');
-    const server = getSelectedServerPreset();
-    if (server && server.clients && server.clients.indexOf('1.20.4') === -1) {
-        const jsBuildSelect = document.getElementById('jsBuildSelect');
-        if (jsBuildSelect) {
-            jsBuildSelect.value = server.preferredBuild || 'javascript/builds/official-1.8.8/index.html';
-        }
-        showScreen('javascript-screen');
-        return;
-    }
-
     if (versionSelect && versionSelect.value) {
         if (versionSelect.value === 'javascript') {
             showScreen('javascript-screen');
@@ -160,11 +130,7 @@ function launchGame() {
 function launchGameWithSettings(selectId) {
     const buildSelect = document.getElementById(selectId);
     if (buildSelect && buildSelect.value) {
-        const compatibleBuildUrl = getCompatibleBuildUrl(buildSelect.value);
-        if (compatibleBuildUrl !== buildSelect.value) {
-            buildSelect.value = compatibleBuildUrl;
-        }
-        const url = appendSelectedServer(compatibleBuildUrl);
+        const url = appendSelectedServer(buildSelect.value);
         const toggle = document.getElementById('aboutBlankToggle');
         const useAboutBlank = toggle ? toggle.checked : localStorage.getItem('eaglerCloak') === 'true';
 

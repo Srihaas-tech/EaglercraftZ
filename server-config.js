@@ -1,14 +1,13 @@
 (function () {
     "use strict";
 
-    const OFFICIAL_18_BUILD = "javascript/builds/official-1.8.8/index.html";
     const LOCAL_120_BUILD = "javascript/builds/0.2.0/index.html";
 
     const PUBLIC_SERVERS = [
-        { id: "archmc", name: "ArchMC", addr: "wss://mc.arch.lol/", clients: ["1.8.8"], preferredBuild: OFFICIAL_18_BUILD },
-        { id: "thanatos", name: "Thanatos Network", addr: "wss://web.thanatos-network.xyz/", clients: ["1.8.8"], preferredBuild: OFFICIAL_18_BUILD },
-        { id: "clever", name: "Clever Teaching", addr: "wss://clever-teaching.com/", clients: ["1.8.8"], preferredBuild: OFFICIAL_18_BUILD },
-        { id: "hamburber", name: "HAMBURBER-SMP", addr: "wss://hamburber-smp.eagler.host/", clients: ["1.8.8"], preferredBuild: OFFICIAL_18_BUILD }
+        { id: "archmc", name: "ArchMC", addr: "wss://mc.arch.lol/", clients: ["1.8.8", "1.20.4"], preferredBuild: LOCAL_120_BUILD },
+        { id: "thanatos", name: "Thanatos Network", addr: "wss://web.thanatos-network.xyz/", clients: ["1.8.8", "1.20.4"], preferredBuild: LOCAL_120_BUILD },
+        { id: "clever", name: "Clever Teaching", addr: "wss://clever-teaching.com/", clients: ["1.8.8", "1.20.4"], preferredBuild: LOCAL_120_BUILD },
+        { id: "hamburber", name: "HAMBURBER-SMP", addr: "wss://hamburber-smp.eagler.host/", clients: ["1.8.8", "1.20.4"], preferredBuild: LOCAL_120_BUILD }
     ];
 
     const LOCAL_SERVER = {
@@ -119,7 +118,6 @@
         normalizeServerAddress: normalizeServerAddress,
         getJoinServerFromLocation: getJoinServerFromLocation,
         isServerAddressCompatible: isServerAddressCompatible,
-        OFFICIAL_18_BUILD: OFFICIAL_18_BUILD,
         LOCAL_120_BUILD: LOCAL_120_BUILD
     };
 }());

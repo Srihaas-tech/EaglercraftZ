@@ -29,7 +29,7 @@
 						worldsDB: "worlds",
 						logInvalidCerts: true,
 						crashOnUncaughtExceptions: true,
-						servers: serverConfig ? serverConfig.getServers({ includeLocal: true, client: "1.20.4" }) : [
+						servers: serverConfig ? serverConfig.getServers({ includeLocal: true }) : [
 							{ addr: "ws://localhost:8081/", name: "Local test server" }
 						],
 						relays: serverConfig ? serverConfig.getRelays() : [
@@ -42,7 +42,7 @@
 					var q = window.location.search;
 					if(serverConfig) {
 						var s = serverConfig.getJoinServerFromLocation(window.location);
-						if(s && serverConfig.isServerAddressCompatible(s, "1.20.4")) window.eaglercraftXOpts.joinServer = s;
+						if(s) window.eaglercraftXOpts.joinServer = s;
 					}else if((typeof q === "string") && q[0] === "?" && (typeof window.URLSearchParams !== "undefined")) {
 						q = new window.URLSearchParams(q);
 						var s = q.get("server");
