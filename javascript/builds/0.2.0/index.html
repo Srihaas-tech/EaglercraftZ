@@ -11,6 +11,7 @@
 		<meta property="og:title" content="EaglercraftZ 1.20" />
 		<meta property="og:description" content="test directory HTML page" />
 		<link type="image/png" rel="shortcut icon" href="favicon.png" />
+		<script type="text/javascript" src="../../../server-config.js"></script>
 		<script type="text/javascript" src="classes.js"></script>
 		<script type="text/javascript">
 			"use strict";
@@ -18,6 +19,7 @@
 				if(window.location.href.indexOf("file:") === 0) {
 					alert("HTTP please, do not open this file locally, run a local HTTP server and load it via HTTP");
 				}else {
+					var serverConfig = window.EaglercraftZServerConfig || null;
 					var relayId = Math.floor(Math.random() * 3);
 					window.eaglercraftXOpts = {
 						demoMode: false,
@@ -27,13 +29,14 @@
 						worldsDB: "worlds",
 						logInvalidCerts: true,
 						crashOnUncaughtExceptions: true,
-						servers: [
+						servers: serverConfig ? serverConfig.getServers({ includeLocal: true }) : [
 							{ addr: "ws://localhost:8081/", name: "Local test server" },
-							{ addr: "mc.arch.lol", name: "ArchMC" },
-							{ addr: "wss://web.thanatos-network.xyz", name: "Thanatos Network" },
-							{ addr: "wss://clever-teaching.com", name: "Clever Teaching"}
+							{ addr: "wss://mc.arch.lol/", name: "ArchMC" },
+							{ addr: "wss://web.thanatos-network.xyz/", name: "Thanatos Network" },
+							{ addr: "wss://clever-teaching.com/", name: "Clever Teaching" },
+							{ addr: "wss://hamburber-smp.eagler.host/", name: "HAMBURBER-SMP" }
 						],
-						relays: [
+						relays: serverConfig ? serverConfig.getRelays() : [
 							{ addr: "wss://relay.deev.is/", comment: "lax1dude relay #1", primary: relayId === 0 },
 							{ addr: "wss://relay.lax1dude.net/", comment: "lax1dude relay #2", primary: relayId === 1 },
 							{ addr: "wss://relay.shhnowisnottheti.me/", comment: "ayunami relay #1", primary: relayId === 2 }
@@ -41,7 +44,10 @@
 					};
 
 					var q = window.location.search;
-					if((typeof q === "string") && q[0] === "?" && (typeof window.URLSearchParams !== "undefined")) {
+					if(serverConfig) {
+						var s = serverConfig.getJoinServerFromLocation(window.location);
+						if(s) window.eaglercraftXOpts.joinServer = s;
+					}else if((typeof q === "string") && q[0] === "?" && (typeof window.URLSearchParams !== "undefined")) {
 						q = new window.URLSearchParams(q);
 						var s = q.get("server");
 						if(s) window.eaglercraftXOpts.joinServer = s;

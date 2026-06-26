@@ -1,3 +1,111 @@
+const SERVER_PRESET_KEY = 'eaglerServerPreset';
+const CUSTOM_SERVER_KEY = 'eaglerCustomServer';
+
+function getServerConfig() {
+    return window.EaglercraftZServerConfig || null;
+}
+
+function getFallbackServers() {
+    return [
+        { id: 'local', name: 'Local test server', addr: 'ws://localhost:8081/' },
+        { id: 'archmc', name: 'ArchMC', addr: 'wss://mc.arch.lol/' },
+        { id: 'thanatos', name: 'Thanatos Network', addr: 'wss://web.thanatos-network.xyz/' },
+        { id: 'clever', name: 'Clever Teaching', addr: 'wss://clever-teaching.com/' },
+        { id: 'hamburber', name: 'HAMBURBER-SMP', addr: 'wss://hamburber-smp.eagler.host/' }
+    ];
+}
+
+function getLauncherServers() {
+    const serverConfig = getServerConfig();
+    return serverConfig ? serverConfig.getServers({ includeLocal: true }) : getFallbackServers();
+}
+
+function normalizeServerAddress(address) {
+    const serverConfig = getServerConfig();
+    if (serverConfig) {
+        return serverConfig.normalizeServerAddress(address);
+    }
+
+    const trimmed = (address || '').trim();
+    if (!trimmed) return '';
+    if (/^wss?:\/\//i.test(trimmed)) return trimmed;
+    if (/^https:\/\//i.test(trimmed)) return 'wss://' + trimmed.slice('https://'.length);
+    if (/^http:\/\//i.test(trimmed)) return 'ws://' + trimmed.slice('http://'.length);
+    return 'wss://' + trimmed;
+}
+
+function findServerPreset(serverId) {
+    return getLauncherServers().find(server => server.id === serverId) || null;
+}
+
+function setSelectValueIfAvailable(select, value) {
+    if (!select) return;
+    const hasValue = Array.from(select.options).some(option => option.value === value);
+    select.value = hasValue ? value : '';
+}
+
+function populateServerSelect() {
+    const serverSelect = document.getElementById('serverSelect');
+    if (!serverSelect) return;
+
+    const storedValue = localStorage.getItem(SERVER_PRESET_KEY) || serverSelect.value;
+    serverSelect.innerHTML = '';
+
+    const serverListOption = document.createElement('option');
+    serverListOption.value = '';
+    serverListOption.textContent = 'Server List';
+    serverSelect.appendChild(serverListOption);
+
+    getLauncherServers().forEach(server => {
+        const option = document.createElement('option');
+        option.value = server.id;
+        option.textContent = server.name;
+        serverSelect.appendChild(option);
+    });
+
+    const customOption = document.createElement('option');
+    customOption.value = 'custom';
+    customOption.textContent = 'Custom server';
+    serverSelect.appendChild(customOption);
+
+    setSelectValueIfAvailable(serverSelect, storedValue);
+}
+
+function handleServerSelectChange(options) {
+    const serverSelect = document.getElementById('serverSelect');
+    const customServerInput = document.getElementById('customServerInput');
+    if (!serverSelect) return;
+
+    const isCustom = serverSelect.value === 'custom';
+    if (customServerInput) {
+        customServerInput.classList.toggle('hidden', !isCustom);
+        if (isCustom && (!options || options.focusCustom !== false)) customServerInput.focus();
+    }
+
+    localStorage.setItem(SERVER_PRESET_KEY, serverSelect.value);
+}
+
+function getSelectedServerAddress() {
+    const serverSelect = document.getElementById('serverSelect');
+    if (!serverSelect || !serverSelect.value) return '';
+
+    if (serverSelect.value === 'custom') {
+        const customServerInput = document.getElementById('customServerInput');
+        return normalizeServerAddress(customServerInput ? customServerInput.value : '');
+    }
+
+    const server = findServerPreset(serverSelect.value);
+    return server ? normalizeServerAddress(server.addr) : '';
+}
+
+function appendSelectedServer(url) {
+    const server = getSelectedServerAddress();
+    if (!server) return url;
+
+    const separator = url.includes('?') ? '&' : '?';
+    return `${url}${separator}server=${encodeURIComponent(server)}`;
+}
+
 function showScreen(screenId) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     const screen = document.getElementById(screenId);
@@ -18,7 +126,7 @@ function launchGame() {
 function launchGameWithSettings(selectId) {
     const buildSelect = document.getElementById(selectId);
     if (buildSelect && buildSelect.value) {
-        const url = buildSelect.value;
+        const url = appendSelectedServer(buildSelect.value);
         const toggle = document.getElementById('aboutBlankToggle');
         const useAboutBlank = toggle ? toggle.checked : localStorage.getItem('eaglerCloak') === 'true';
 
@@ -33,7 +141,7 @@ function launchGameWithSettings(selectId) {
                 iframe.style.width = '100%';
                 iframe.style.height = '100%';
                 iframe.style.margin = '0';
-                iframe.src = window.location.href.replace(/[^/]*$/, '') + url;
+                iframe.src = new URL(url, window.location.href).href;
                 win.document.body.appendChild(iframe);
                 
                 // Pause launcher music
@@ -111,6 +219,20 @@ function updateRuntimes() {
 
 // Intro Animation Logic & Setup
 document.addEventListener('DOMContentLoaded', () => {
+    populateServerSelect();
+
+    const serverSelect = document.getElementById('serverSelect');
+    const customServerInput = document.getElementById('customServerInput');
+    if (customServerInput) {
+        customServerInput.value = localStorage.getItem(CUSTOM_SERVER_KEY) || '';
+        customServerInput.addEventListener('input', (e) => {
+            localStorage.setItem(CUSTOM_SERVER_KEY, e.target.value);
+        });
+    }
+    if (serverSelect) {
+        handleServerSelectChange({ focusCustom: false });
+    }
+
     // Setup Cloak Toggle
     const cloakToggle = document.getElementById('aboutBlankToggle');
     if (cloakToggle) {

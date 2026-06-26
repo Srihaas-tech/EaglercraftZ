@@ -88,6 +88,17 @@
                 <option value="javascript">EaglercraftZ Javascript</option>
                 <option value="wasm">EaglercraftZ Wasm</option>
             </select>
+
+            <label class="mc-label" style="margin-top: 15px;">Select Server:</label>
+            <select id="serverSelect" class="mc-select" onchange="handleServerSelectChange()">
+                <option value="">Server List</option>
+                <option value="archmc">ArchMC</option>
+                <option value="thanatos">Thanatos Network</option>
+                <option value="clever">Clever Teaching</option>
+                <option value="local">Local test server</option>
+                <option value="custom">Custom server</option>
+            </select>
+            <input id="customServerInput" class="mc-input server-custom hidden" type="text" placeholder="wss://example.com/" autocomplete="off" spellcheck="false">
         </div>
 
         <div class="mc-button-container double">
@@ -152,6 +163,7 @@
         </div>
     </div>
 
+    <script src="server-config.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
